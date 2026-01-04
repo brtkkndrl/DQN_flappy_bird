@@ -1,6 +1,6 @@
 # Playing Flappy Bird with DQN
 
-This projects implements training of a Deep Q-Networks (DQN) to play the Flappy Bird game. During experimtents 3 models were trained; **DQN**, **DDQN**. **Dueling DDQN**. Trained models can be found in **Releases**.
+This projects implements training of Deep Q-Networks (DQN) to play the Flappy Bird game. During experiments 3 models were trained: **DQN**, **Double DQN (DDQN)**, and **Dueling Double DQN (Dueling DDQN)**. The trained models can be found in the **Releases** section.
 
 | Training history      |    Evaluation history |
 |-----------------------|-----------------------|
@@ -8,7 +8,7 @@ This projects implements training of a Deep Q-Networks (DQN) to play the Flappy 
 
 ### Architecture:
 
-Project uses CNN similar to the one used in paper ["Playing Atari with Deep Reinforcement Learning"](http://arxiv.org/abs/1312.5602) by Mnih et al. (2013). Input to the CNN is a 72x106x4 image, created by stacking cropped, rescaled, gray-scale game frames. The output consists of 2 q-values for possible actions: _jump_ or _no-jump_.
+The project uses a Convolutional Neural Network (CNN) similar to the one described in the paper ["Playing Atari with Deep Reinforcement Learning"](http://arxiv.org/abs/1312.5602) by Mnih et al. (2013). Input to the CNN is a 72x106x4 image, created by stacking cropped, rescaled, grayscale game frames. The output consists of 2 Q-values corresponding to the possible actions: _jump_ or _no-jump_.
 
 ### Resources:
 
