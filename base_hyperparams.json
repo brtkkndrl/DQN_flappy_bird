@@ -1,0 +1,15 @@
+{
+  "learning_rate": 0.0002,
+  "exploration_rate_initial": 1.0,
+  "exploration_rate_final": 0.03,
+  "exploration_fraction": 0.2,
+  "gamma": 0.99,
+  "replay_buffer_size": 100000,
+  "batch_size": 32,
+  "train_freq": 4,
+  "learning_starts": 10000,
+  "target_update_interval": 512,
+  "frame_stack": 4,
+  "double_dqn": true,
+  "dueling_dqn": true
+}
