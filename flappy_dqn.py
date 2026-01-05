@@ -23,6 +23,8 @@ import sys
 
 import pandas as pd
 
+from PIL import Image
+
 def train_flappy(dirpath, hyperparams_path, steps):
     env = gym.make("FlappyBird-v0", max_episode_steps=1000, render_mode="rgb_array", use_lidar = False, background=None)
     env = FlappyBirdImgObservation(env)
@@ -95,7 +97,7 @@ def train_flappy(dirpath, hyperparams_path, steps):
             callback.save_history(f"{train_dirname}/")
             callback.save_best_model_weights(f"{train_dirname}/")
 
-def test_flappy(dirpath, fps):
+def test_flappy(dirpath, fps, record):
     test_env = gym.make("FlappyBird-v0", render_mode="rgb_array", use_lidar = False, background=None)
     test_env = FlappyBirdImgObservation(test_env)
 
@@ -127,6 +129,8 @@ def test_flappy(dirpath, fps):
     font = pygame.font.Font(None, 10*SCALE)
 
     scores = []
+
+    frames = []
 
     running = True
     while running:
@@ -164,6 +168,32 @@ def test_flappy(dirpath, fps):
             pygame.display.flip()
             clock.tick(fps)
 
+            if record:
+                frame = pygame.surfarray.array3d(screen)
+                frame = Image.fromarray(frame)
+                frame = frame.transpose(Image.FLIP_LEFT_RIGHT)
+                frame = frame.rotate(90, expand=True)
+                frames.append(frame)
+
+
+        if record:
+            GAME_FPS = 30
+            RECORDING_DURATION_SECONDS = 8
+            RECORDING_FILENAME = "test_run.gif"
+
+            frames = frames[::2] # remove every second element to double the fps
+            
+            if len(frames) > RECORDING_DURATION_SECONDS*GAME_FPS:
+                frames = frames[:RECORDING_DURATION_SECONDS*GAME_FPS]
+                frames[0].save(
+                    RECORDING_FILENAME, 
+                    save_all=True, 
+                    append_images=frames[1:],
+                    duration=1000//GAME_FPS,
+                    loop=0        
+                )
+            frames = []
+
         scores.append(score)
         df = pd.DataFrame({"score": scores})
         print(df.describe())
@@ -177,6 +207,7 @@ parser.add_argument('--dirpath', type=str, help="path to directory to initialize
 parser.add_argument('--hyperparams', type=str, help="path to hyperparameters file, (will override default)", required=False, default=None)
 parser.add_argument('--test_fps', type=int, help="framerate of testing enviroment", required=False, default=30)
 parser.add_argument('--train_steps', type=int, help="training duration in env steps", required=False, default=200_000)
+parser.add_argument('--record', action='store_true', help="record and save a test run", required=False)
 
 args = parser.parse_args()
 
@@ -186,4 +217,4 @@ elif args.mode == "test":
     if args.dirpath is None:
         print("Error: must specify dirpath for testing.")
         sys.exit(1)
-    test_flappy(dirpath = args.dirpath, fps=args.test_fps)
+    test_flappy(dirpath = args.dirpath, fps=args.test_fps, record=args.record)
