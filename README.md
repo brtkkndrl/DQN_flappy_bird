@@ -2,6 +2,10 @@
 
 This projects implements training of Deep Q-Networks (DQN) to play the Flappy Bird game. During experiments 3 models were trained: **DQN**, **Double DQN (DDQN)**, and **Dueling Double DQN (Dueling DDQN)**. The trained models can be found in the **Releases** section.
 
+<p align="center">
+  <img src="img/test_run.gif" width = "20%"/>
+</p>
+
 | Training history      |    Evaluation history |
 |-----------------------|-----------------------|
 | ![Training history graph](img/train_comparison.png) | ![Evaluation history graph](img/eval_comparison.png) |
