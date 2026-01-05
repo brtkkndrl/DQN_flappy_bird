@@ -16,7 +16,7 @@ The project uses a Convolutional Neural Network (CNN) similar to the one describ
 
 ### Resources:
 
-[DQN framework](https://github.com/brtkkndrl/DQN)
+[DQN library](https://github.com/brtkkndrl/DQN)
 
 [flappy-bird-gymnasium environment](https://github.com/markub3327/flappy-bird-gymnasium)
 
